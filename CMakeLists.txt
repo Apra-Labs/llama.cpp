@@ -768,6 +768,39 @@ if (BUILD_SHARED_LIBS)
     endif()
 endif()
 
+# Add llava and clip library
+#################################################################################
+add_library(llava OBJECT
+            llava.cpp
+            llava.h
+            clip.cpp
+            clip.h
+            )
+
+target_link_libraries(llava PRIVATE ggml llama ${CMAKE_THREAD_LIBS_INIT})
+
+target_include_directories(llava PUBLIC examples/llava)
+target_include_directories(llava PUBLIC .)
+target_include_directories(llava PUBLIC common)
+
+target_compile_features(llava PRIVATE cxx_std_11)
+
+add_library(llava_static STATIC $<TARGET_OBJECTS:llava>)
+if (BUILD_SHARED_LIBS)
+    set_target_properties(llava PROPERTIES POSITION_INDEPENDENT_CODE ON)
+    target_compile_definitions(llava PRIVATE LLAMA_SHARED LLAMA_BUILD)
+    add_library(llava_shared SHARED $<TARGET_OBJECTS:llava>)
+    target_link_libraries(llava_shared PRIVATE ggml llama ${CMAKE_THREAD_LIBS_INIT})
+    install(TARGETS llava_shared LIBRARY)
+endif()
+
+if (NOT MSVC)
+    target_compile_options(llava PRIVATE -Wno-cast-qual) # stb_image.h
+    endif()
+if(TARGET BUILD_INFO)
+    add_dependencies(llava BUILD_INFO)
+endif()
+########################################################################
 
 #
 # install
@@ -813,6 +846,12 @@ install(TARGETS ggml PUBLIC_HEADER DESTINATION include/llama)
 
 set_target_properties(llama PROPERTIES PUBLIC_HEADER ${CMAKE_CURRENT_SOURCE_DIR}/llama.h)
 install(TARGETS llama LIBRARY PUBLIC_HEADER DESTINATION include/llama)
+
+############################################################################################
+set(LLAVA_PUBLIC_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/examples/llava/llava.h ${CMAKE_CURRENT_SOURCE_DIR}/examples/llava/clip.h)
+set_target_properties(llava PROPERTIES PUBLIC_HEADER "${LLAVA_PUBLIC_HEADERS}")
+install(TARGETS llava LIBRARY PUBLIC_HEADER DESTINATION include/llama)
+###########################################################################################
 
 install(
     FILES convert.py
