@@ -6,8 +6,8 @@
 
 #include "sampling.h"
 
-#define LOG_NO_FILE_LINE_FUNCTION
-#include "log.h"
+// #define LOG_NO_FILE_LINE_FUNCTION
+// #include "log.h"
 
 #include <cmath>
 #include <string>
