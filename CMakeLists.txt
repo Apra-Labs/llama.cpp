@@ -770,7 +770,7 @@ endif()
 
 # Add llava and clip library
 #################################################################################
-add_library(llavalib OBJECT
+add_library(llavalib STATIC
             examples/llava/llava.cpp
             examples/llava/llava.h
             examples/llava/clip.cpp

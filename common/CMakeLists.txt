@@ -43,7 +43,7 @@ if (BUILD_SHARED_LIBS)
 endif()
 
 
-set(TARGET common)
+set(TARGET common_llama)
 
 add_library(${TARGET} STATIC
     base64.hpp
@@ -68,5 +68,5 @@ target_compile_features(${TARGET} PUBLIC cxx_std_11)
 target_link_libraries(${TARGET} PRIVATE llama build_info)
 
 set(COMMON_PUBLIC_HEADERS "common.h" "sampling.h" "console.h" "grammar-parser.h" "train.h" "log.h")
-set_target_properties(common PROPERTIES PUBLIC_HEADER "${COMMON_PUBLIC_HEADERS}")
-install(TARGETS common LIBRARY PUBLIC_HEADER DESTINATION include/llama)
+set_target_properties(${TARGET} PROPERTIES PUBLIC_HEADER "${COMMON_PUBLIC_HEADERS}")
+install(TARGETS ${TARGET} LIBRARY PUBLIC_HEADER DESTINATION include/llama)
