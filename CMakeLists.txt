@@ -771,10 +771,10 @@ endif()
 # Add llava and clip library
 #################################################################################
 add_library(llava OBJECT
-            llava.cpp
-            llava.h
-            clip.cpp
-            clip.h
+            examples/llava/llava.cpp
+            examples/llava/llava.h
+            examples/llava/clip.cpp
+            examples/llava/clip.h
             )
 
 target_link_libraries(llava PRIVATE ggml llama ${CMAKE_THREAD_LIBS_INIT})
