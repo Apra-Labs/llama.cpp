@@ -67,6 +67,6 @@ target_include_directories(${TARGET} PUBLIC .)
 target_compile_features(${TARGET} PUBLIC cxx_std_11)
 target_link_libraries(${TARGET} PRIVATE llama build_info)
 
-set(COMMON_PUBLIC_HEADERS "common.h" "sampling.h" "console.h" "grammar-parser.h" "train.h")
+set(COMMON_PUBLIC_HEADERS "common.h" "sampling.h" "console.h" "grammar-parser.h" "train.h" "log.h")
 set_target_properties(common PROPERTIES PUBLIC_HEADER "${COMMON_PUBLIC_HEADERS}")
 install(TARGETS common LIBRARY PUBLIC_HEADER DESTINATION include/llama)
