@@ -770,35 +770,27 @@ endif()
 
 # Add llava and clip library
 #################################################################################
-add_library(llava OBJECT
+add_library(llavalib OBJECT
             examples/llava/llava.cpp
             examples/llava/llava.h
             examples/llava/clip.cpp
             examples/llava/clip.h
             )
 
-target_link_libraries(llava PRIVATE ggml llama ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(llavalib PRIVATE ggml llama ${CMAKE_THREAD_LIBS_INIT})
 
-target_include_directories(llava PUBLIC examples/llava)
-target_include_directories(llava PUBLIC .)
-target_include_directories(llava PUBLIC common)
+target_include_directories(llavalib PUBLIC examples/llava)
+target_include_directories(llavalib PUBLIC .)
+target_include_directories(llavalib PUBLIC common)
 
-target_compile_features(llava PRIVATE cxx_std_11)
+target_compile_features(llavalib PRIVATE cxx_std_11)
 
-add_library(llava_static STATIC $<TARGET_OBJECTS:llava>)
-if (BUILD_SHARED_LIBS)
-    set_target_properties(llava PROPERTIES POSITION_INDEPENDENT_CODE ON)
-    target_compile_definitions(llava PRIVATE LLAMA_SHARED LLAMA_BUILD)
-    add_library(llava_shared SHARED $<TARGET_OBJECTS:llava>)
-    target_link_libraries(llava_shared PRIVATE ggml llama ${CMAKE_THREAD_LIBS_INIT})
-    install(TARGETS llava_shared LIBRARY)
-endif()
-
+add_library(llavalib_static STATIC $<TARGET_OBJECTS:llava>)
 if (NOT MSVC)
-    target_compile_options(llava PRIVATE -Wno-cast-qual) # stb_image.h
+    target_compile_options(llavalib PRIVATE -Wno-cast-qual) # stb_image.h
     endif()
 if(TARGET BUILD_INFO)
-    add_dependencies(llava BUILD_INFO)
+    add_dependencies(llavalib BUILD_INFO)
 endif()
 ########################################################################
 
@@ -848,9 +840,9 @@ set_target_properties(llama PROPERTIES PUBLIC_HEADER ${CMAKE_CURRENT_SOURCE_DIR}
 install(TARGETS llama LIBRARY PUBLIC_HEADER DESTINATION include/llama)
 
 ############################################################################################
-set(LLAVA_PUBLIC_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/examples/llava/llava.h ${CMAKE_CURRENT_SOURCE_DIR}/examples/llava/clip.h)
-set_target_properties(llava PROPERTIES PUBLIC_HEADER "${LLAVA_PUBLIC_HEADERS}")
-install(TARGETS llava LIBRARY PUBLIC_HEADER DESTINATION include/llama)
+set(LLAVALIB_PUBLIC_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/examples/llava/llava.h ${CMAKE_CURRENT_SOURCE_DIR}/examples/llava/clip.h)
+set_target_properties(llavalib PROPERTIES PUBLIC_HEADER "${LLAVALIB_PUBLIC_HEADERS}")
+install(TARGETS llavalib LIBRARY PUBLIC_HEADER DESTINATION include/llama)
 ###########################################################################################
 
 install(
