@@ -829,10 +829,11 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/LlamaConfig.cmake
               ${CMAKE_CURRENT_BINARY_DIR}/LlamaConfigVersion.cmake
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Llama)
 
-set(GGML_PUBLIC_HEADERS "ggml.h" "${GGML_HEADERS_OPENCL}"
+set(GGML_PUBLIC_HEADERS "ggml.h"
+        "${GGML_HEADERS_CUDA}" "${GGML_HEADERS_OPENCL}"
         "${GGML_HEADERS_METAL}" "${GGML_HEADERS_MPI}" "${GGML_HEADERS_EXTRA}")
 
-set_target_properties(ggml PROPERTIES PUBLIC_HEADER "${GGML_PUBLIC_HEADERS}")
+#set_target_properties(ggml PROPERTIES PUBLIC_HEADER "${GGML_PUBLIC_HEADERS}")
 install(TARGETS ggml PUBLIC_HEADER DESTINATION include/llama)
 
 set_target_properties(llama PROPERTIES PUBLIC_HEADER ${CMAKE_CURRENT_SOURCE_DIR}/llama.h)
