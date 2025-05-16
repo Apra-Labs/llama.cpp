@@ -28,19 +28,6 @@
   - Modified installation paths in `CMakeLists.txt`
   - Updated header search paths in build configuration
 
-### Removed
-- Removed logger header (temporary change)
-  - Removed from common library headers
-  - Later re-added with improved implementation
-- Removed ggml cuda headers (later reverted)
-  - Temporarily removed CUDA-specific headers
-  - Affected CUDA build configuration
-
-### Reverted
-- Reverted removal of ggml cuda headers to maintain CUDA support
-  - Restored CUDA headers to maintain compatibility
-  - Ensured CUDA functionality remains intact
-
 ### Technical Details
 - All changes are part of the vcpkg port implementation
 - Changes focus on library organization and header management
