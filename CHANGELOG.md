@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - Changes since master branch
+## Changes since master branch
 
 ### Added
 - Added common and llava as static libraries
